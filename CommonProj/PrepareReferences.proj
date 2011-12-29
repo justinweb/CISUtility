@@ -1,0 +1,70 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> 
+
+<!--
+Version : 1.0
+Revision:
+
+-->
+        
+<UsingTask TaskName="TaskUpdateFile.UpdateFiles" 
+        AssemblyFile="$(ExtProgramPath)TaskUpdateFile.dll"/>
+
+  <UsingTask TaskName="TaskUpdateFile.CSProjParser" 
+        AssemblyFile="$(ExtProgramPath)TaskUpdateFile.dll"/>
+
+<UsingTask TaskName="TaskUpdateFile.IOUtility" 
+        AssemblyFile="$(ExtProgramPath)TaskUpdateFile.dll"/>   
+        
+<UsingTask TaskName="TaskUpdateFile.VSSolution" 
+        AssemblyFile="$(ExtProgramPath)TaskUpdateFile.dll"/> 
+        
+<ItemGroup>
+<!-- 如果在專案的MSBuildSettings_XXXX中有設定ExtraRef這個Propoerty的話，就準備要額外複製到Dlls中的參考項目-->
+<ExtraRefList Include="$(DLLReleaseFolder)\$(ExtraRef)"/>
+</ItemGroup>
+
+<Target Name="UpdateDLLs" DependsOnTargets="UpdateDLLs_Core">
+</Target>
+
+<Target Name="UpdateDLLs_Core">
+<!-- 取得目前的路徑 -->
+<IOUtility TaskName="GetCurrentDir">
+    <Output TaskParameter="CurrentDir" ItemName="CrtDir"/>
+</IOUtility>
+
+<!-- 列出指定的方案檔中的所有專案檔 -->
+<VSSolution SLNName="@(CrtDir)\$(SlnName).sln" TaskName="GetProjectList" Prefix="@(CrtDir)\">
+  <Output TaskParameter="ListProject" ItemName="ProjectList"/>
+</VSSolution>
+
+<!-- 產生並取得所有專案檔中的參考項目。一開始只會產生檔名，且大小為0。主要是為了後續能進行更新用。 -->
+  <CSProjParser ProjPath="@(ProjectList)" IsMakePDB="true">
+    <Output TaskParameter="ReferenceList" ItemName="RefList"/>
+  </CSProjParser>
+  <Message Text="Ref List : @(RefList)"/>
+
+<!-- 由公用的DLL來源更新  -->
+<UpdateFiles UpdateFolder=".\Dlls\" SourcePathes="@(DLLSourceFiles)" IsDebug="false"/>
+
+<!-- 如果Sln自己有指定自己另外需要更新的DLL來源的話，就進行更新 -->
+<UpdateFiles UpdateFolder=".\Dlls\" SourcePathes="@(DLLSourceFiles_Proj)" IsDebug="false"/>
+
+<Message Text="Copy *.ctf : @(ExtraRefList)"/>
+  <!-- Copy *.ctf -->
+  <Copy    
+    Condition="'$(ExtraRef)'!=''"
+    SourceFiles="@(ExtraRefList)"
+    DestinationFolder=".\Dlls\"
+  />
+</Target>
+
+<Target Name="CopyExtraRef" >
+  <Message Text="Copy *.ctf : @(ExtraRefList)"/>
+  <!-- Copy *.ctf -->
+  <Copy    
+    SourceFiles="@(ExtraRefList)"
+    DestinationFolder="$(DLLReleaseFolder)"
+  />
+</Target>
+
+</Project>

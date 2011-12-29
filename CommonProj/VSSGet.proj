@@ -1,0 +1,41 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> 
+
+<!--
+Version : 1.0
+Revision:
+
+-->
+
+<PropertyGroup>
+<RootDir>./</RootDir>
+<SlnName>SetSlnName</SlnName>
+<ExtProgramPath>D:\Ext Programs\</ExtProgramPath>
+<VSSVersion></VSSVersion>
+<VSSDBPath>X:/TX4DB/srcsafe.ini</VSSDBPath>
+<VSSUser>nant</VSSUser>
+<VSSPassword>nant</VSSPassword>
+<SettingPath>.\</SettingPath>
+</PropertyGroup>
+
+<UsingTask TaskName="MSBuild.Community.Tasks.SourceSafe.VSSGet" 
+        AssemblyFile="$(ExtProgramPath)MSBuilt_VSS\MSBuild.Community.Tasks.dll"/> 
+
+<Import Project="$(SettingPath)$(SettingsName)"/>
+
+<Target Name="VSSGet" >
+<Message Text="Get VSS Version : $(VSSVersion)"/>
+<Message Text="RootDir : $(RootDir)"/>
+<Message Text="Path : $/$(SlnName).root"/>
+<Message Text="$(VSSDBPath) $(VSSUser) $(VSSPassword)"/>
+<VssGet 
+DatabasePath="$(VSSDBPath)"
+UserName="$(VSSUser)"
+Password="$(VSSPassword)" 
+Version="$(VSSVersion)"
+Path="$/$(SlnName).root" 
+Recursive="True"
+LocalPath="$(RootDir)" />
+</Target>
+
+
+</Project>

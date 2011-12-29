@@ -1,0 +1,79 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> 
+
+<!--
+Version : 2.0
+Revision:
+
+-->
+
+<PropertyGroup>
+<RootDir>../</RootDir>
+<SourceDir>../</SourceDir>
+<!-- 由  MSBuildSettings_User.targets 中取得 -->
+<!--
+<SlnName>TX4</SlnName>
+<VSSVersion></VSSVersion>
+<ExtProgramPath>D:\Ext Programs\</ExtProgramPath>
+<ConfigureVersion>Release</ConfigureVersion>
+-->
+</PropertyGroup>
+
+<ItemGroup>
+</ItemGroup>
+
+<!-- 改在每個專案的proj中先行匯入設定檔 -->
+<!--
+<Import Project="$(SettingPath)$(SettingsName)"/>
+-->
+<Import Project="$(CommonProjPath)\PrepareReferences.proj"/>
+<Import Project="$(CommonProjPath)\DefaultSlnBeforeBuild.proj"/>
+
+<Target Name="ReleaseDLLs">
+<!--
+  <Message Text ="ReleaseDLLs : @(DLLReleaseFiles)"/>
+-->
+<Copy
+  SourceFiles="@(DLLReleaseFiles)"
+  DestinationFolder="$(DLLReleaseFolder)"
+/>
+</Target>
+
+<Target Name="Compile">
+
+<Exec 
+	Command="MSBuild $(SlnName).sln /nologo /verbosity:m /property:Configuration=$(ConfigureVersion) " 
+	ContinueOnError='true'
+>
+	<Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>	
+</Exec>
+
+<Error Text="ExitCode for building $(SlnName).sln = $(ErrorCode)" />
+<Error Text="Error while building $(SlnName).sln" Condition="'$(ErrorCode)' > '0'" />
+
+<!-- 
+2011/12/29 Justin
+return the error code
+-->
+<Exec Command="SETX MSBuildResultCode $(ErrorCode) -m" Condition="'$(ErrorCode)' > '0'" />
+
+</Target>
+
+<Target Name="BeforeBuild">
+<Message Text="Polaris_ProjectBuild Ver 1.0.0" />
+<MakeDir Directories="$(DLLReleaseFolder)"/>
+</Target>
+
+<Target Name="Build" DependsOnTargets="BeforeBuild;SlnBeforeBuild;UpdateDLLs;Clean;Compile">
+</Target>
+
+<!--
+<Target Name="Build" DependsOnTargets="Test;BeforeBuild;UpdateDLLs;Clean;Compile;ReleaseDLLs">
+</Target>
+-->
+
+<Target Name="Clean">
+<Message Text="Clean Projects [$(ConfigureVersion)]... "/>
+<Exec Command="MSBuild $(SlnName).sln /t:clean /nologo /verbosity:m /property:Configuration=$(ConfigureVersion)"/>
+</Target>
+
+</Project>

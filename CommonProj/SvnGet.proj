@@ -1,0 +1,60 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> 
+
+<!--
+Version : 1.0
+Revision:
+
+-->
+
+<PropertyGroup>
+<RootDir>./</RootDir>
+<SlnName>TX4</SlnName>
+<ExtProgramPath>D:\Ext Programs\</ExtProgramPath>
+<SvnVersion></SvnVersion>
+<SvnDBPath>https://TWSNHFMITS02.Securities.HQ/svn/TX4DB/</SvnDBPath>
+<SvnUser>nant</SvnUser>
+<SvnPassword>nant</SvnPassword>
+<SettingPath>.\</SettingPath>
+</PropertyGroup>
+
+<UsingTask TaskName="MSBuild.Community.Tasks.Subversion.SvnUpdate" 
+        AssemblyFile="$(ExtProgramPath)MSBuilt_VSS\MSBuild.Community.Tasks.dll"/> 
+<UsingTask TaskName="MSBuild.Community.Tasks.Subversion.SvnCheckout" 
+        AssemblyFile="$(ExtProgramPath)MSBuilt_VSS\MSBuild.Community.Tasks.dll"/> 
+		
+<!--
+<Import Project="$(SettingPath)$(SettingsName)"/>
+-->
+
+<Target Name="UpdateSource1" >
+<Message Text="Get Subversion Version : $(SvnVersion)"/>
+<Message Text="RootDir : $(RootDir)"/>
+<Message Text="Path : $/$(SlnName).root"/>
+<Message Text="$(SvnDBPath) $(SvnUser) $(SvnPassword)"/>
+<SvnUpdate
+RepositoryPath="$(SvnDBPath)"
+Username="$(SvnUser)"
+Password="$(SvnPassword)" 
+Revision="$(SvnVersion)"
+LocalPath="$(RootDir)" 
+ToolPath="C:\Program Files\VisualSVN Server\bin"
+/>
+</Target>
+
+<Target Name="GetSource" >
+<Message Text="Get Subversion Version : $(SvnVersion)"/>
+<Message Text="RootDir : $(RootDir)"/>
+<Message Text="Path : $/$(SlnName).root"/>
+<Message Text="$(SvnDBPath) $(SvnUser) $(SvnPassword)"/>
+<SvnCheckout
+RepositoryPath="$(SvnDBPath)/trunk/$(SlnName)/trunk"
+Username="$(SvnUser)"
+Password="$(SvnPassword)" 
+Revision="$(SvnVersion)"
+LocalPath="$(RootDir)$(SlnName)" 
+ToolPath="C:\Program Files\VisualSVN Server\bin"
+/>
+</Target>
+
+
+</Project>

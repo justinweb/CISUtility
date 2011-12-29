@@ -1,0 +1,27 @@
+Installion
+1. 到10.6.228.25\TX4\IT\TX4_DLLS\MATLAB_DLL中將所有檔案複製到「必要元件」\MATLAB中。
+2. 執行InitBuild.bat，將「必要元件」下的DLL都複製到「NewDLLs」中。
+3. 將Ext Programs目錄複製一份放到D:\下，會是放到目前編譯設定檔的目錄中的子目錄Ext Programs中。
+4. 修改Build_CommonSetting.bat裏的CommonDir路徑。
+4. 修改CLR2_Porjects\MSBuildSettings_User.targets中的「設定要儲存編譯後最新DLL的目錄」及「設定要更新DLL的來源目錄」。
+5. 修改TX4_Projects\MSBuildSettings_User.targets中的「設定要儲存編譯後最新DLL的目錄」及「設定要更新DLL的來源目錄」。
+6. 修改TX4_Projects\MSBuildSettings_TX4iCenter.prj中的
+   <!-- 設定要更新DLL的來源目錄，因為TX4iCeneter需要用到新版的ExcelDLL -->
+
+OtherComponent
+1. IPUSH元件
+2. 資訊處下單元件(PolaFixOrder, PolaDerOrder)
+
+Build
+1. 先執行CLR2_Projects\MSBuildCmd_CLR2.bat
+2. 執行CLR2_Projects\MSBuildCmd_Publish.bat
+
+
+Question
+1. TX4iCenter需要用到新版的Excel (fix)
+2. TX4ModelPrice 需要用到ManagedCPPAPI.netmodule (fix)
+3. 如何更改共用MSBuild proj檔路徑
+ANS
+   1) 更改Build_commonSettings.bat中的以下這行
+      set CommonDir=D:\TestData\Project_Build_V3\CommonProj
+   
