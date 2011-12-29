@@ -25,6 +25,7 @@ MSBuild MSBuildSettings_%CrtSln%.proj /nologo /t:ReleaseDLLs /property:SlnName=%
 IF %ERRORLEVEL% NEQ 0 GOTO BuildFailed
 @ECHO [%CrtSln%]Build Successed >> %CrtDir%BuildResult.txt
 cd ..
+SET PolaCISResult=%ERRORLEVEL%
 GOTO BuildEnd
 
 :BuildFailed

@@ -1,4 +1,8 @@
 Revision History
 
+2011/12/29 Justin
+* 修改成可以使用MSBuild所回傳的錯誤代碼來停止編譯
+* 將CIS切成兩部份。一個是大家會共用的CISUtility；另一個是每個專案自有的.proj檔。例如MMProject目錄中的所有.proj檔。
+
 2011/8/10 
 * Start

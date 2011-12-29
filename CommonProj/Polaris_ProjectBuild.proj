@@ -47,14 +47,8 @@ Revision:
 	<Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>	
 </Exec>
 
-<Error Text="ExitCode for building $(SlnName).sln = $(ErrorCode)" />
+<Error Text="ExitCode for building $(SlnName).sln = $(ErrorCode)" Condition="'$(ErrorCode)' > '0'" />
 <Error Text="Error while building $(SlnName).sln" Condition="'$(ErrorCode)' > '0'" />
-
-<!-- 
-2011/12/29 Justin
-return the error code
--->
-<Exec Command="SETX MSBuildResultCode $(ErrorCode) -m" Condition="'$(ErrorCode)' > '0'" />
 
 </Target>
 
