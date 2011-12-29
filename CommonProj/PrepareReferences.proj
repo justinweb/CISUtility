@@ -31,6 +31,7 @@ Revision:
 <IOUtility TaskName="GetCurrentDir">
     <Output TaskParameter="CurrentDir" ItemName="CrtDir"/>
 </IOUtility>
+<Message Text="CrtDir : @(CrtDir)"/>
 
 <!-- 列出指定的方案檔中的所有專案檔 -->
 <VSSolution SLNName="@(CrtDir)\$(SlnName).sln" TaskName="GetProjectList" Prefix="@(CrtDir)\">
