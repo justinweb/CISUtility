@@ -1,8 +1,12 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> 
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> 
 
 <!--
 Version : 1.0
 Revision:
+2012/2/1 Justin
+加入可以依不同的專案去指定要由VSS DB中取得的版本號。
+在專案的目錄下建立一個文字檔，名稱為VSS.cfg
+其中設定<VSSVersion>release</VSSVersion>，就可以指定要使用的VSS程式碼版本了
 
 -->
 
@@ -19,10 +23,13 @@ Revision:
 
 <UsingTask TaskName="MSBuild.Community.Tasks.SourceSafe.VSSGet" 
         AssemblyFile="$(ExtProgramPath)MSBuilt_VSS\MSBuild.Community.Tasks.dll"/> 
-
+		
 <Import Project="$(SettingPath)$(SettingsName)"/>
+<Import Condition="Exists('$(RootDir)\$(CrtSln)\VSS.cfg')" Project="$(RootDir)\$(CrtSln)\VSS.cfg"/>
+ 
 
 <Target Name="VSSGet" >
+<Message Text="VSSGet Version : 1.01"/>
 <Message Text="Get VSS Version : $(VSSVersion)"/>
 <Message Text="RootDir : $(RootDir)"/>
 <Message Text="Path : $/$(SlnName).root"/>
