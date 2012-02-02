@@ -25,7 +25,7 @@ Revision:
         AssemblyFile="$(ExtProgramPath)MSBuilt_VSS\MSBuild.Community.Tasks.dll"/> 
 		
 <Import Project="$(SettingPath)$(SettingsName)"/>
-<Import Condition="Exists('$(RootDir)\$(CrtSln)\VSS.cfg')" Project="$(RootDir)\$(CrtSln)\VSS.cfg"/>
+<Import Condition="Exists('$(SettingPath)\$(CrtSln)_VSS.cfg')" Project="$(SettingPath)\$(CrtSln)_VSS.cfg"/>
  
 
 <Target Name="VSSGet" >
