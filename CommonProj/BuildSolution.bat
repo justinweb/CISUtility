@@ -3,19 +3,34 @@ Rem %1% Soluction Name
 Rem %2% 設定檔的名稱
 Rem %3% 建置RootDir
 REM %4% 共用檔路徑
+REM %5% 要使用的版本控制方式(VSS or GIT)
 
 SET CrtSln=%1%
 SET SettingsName=%2%
 SET CrtDir=%CD%\
 SET BuildRootDir=%3%
 SET CommonDir=%4%
+SET VSMode=%5%
 
 @ECHO [%CrtSln%]Building ...  >> %CrtDir%BuildResult.txt
+@ECHO [%CrtSln%]Use VSMode=%VSMode% >> %CrtDir%BuildResult.txt
 
 TITLE %CrtSln%
+IF VSS==%VSMode% goto VSMode_VSS
+IF GIT==%VSMode% goto VSMode_GIT
+GOTO BuildFailed
+
+:VSMode_VSS
 MSBuild %CommonDir%\VSSGet.proj /property:SlnName=%CrtSln% /property:SettingsName=%SettingsName% /property:SettingPath=%CD%\ /property:RootDir=%BuildRootDir%
 IF %ERRORLEVEL% NEQ 0 GOTO BuildFailed
+GOTO BuildAFVSS
 
+:VSMode_GIT
+GOTO BuildAFVSS
+
+
+
+:BuildAFVSS
 copy MSBuildSettings_%CrtSln%.proj .\%CrtSln%\MSBuildSettings_%CrtSln%.proj
 cd .\%CrtSln%
 MSBuild MSBuildSettings_%CrtSln%.proj /nologo /t:build /property:SlnName=%CrtSln% /property:SettingsName=%SettingsName% /property:WorkPath=%CrtDir%

@@ -10,9 +10,9 @@ IF %CommonDir% EQU "" GOTO VariableNotFound
 IF %SettingsName% EQU "" GOTO VariableNotFound
 IF %BuildRootDir% EQU "" GOTO VariableNotFound
 
-FOR /F "delims=_= tokens=1,2,3" %%a IN ('set %array.name%_') DO (
+FOR /F "delims=_=, tokens=1,2,3,4" %%a IN ('set %array.name%_') DO (
 if defined exit goto :Build_Aborted
-call :BuildSLN %%c
+call :BuildSLN %%c %%d
 )
 GOTO :Build_Finished
 
@@ -28,6 +28,6 @@ GOTO :eof
 
 REM subrutine最好放在最後面
 :BuildSLN
-call %CommonDir%\BuildSolution.bat %1 %SettingsName% %BuildRootDir% %CommonDir%
+call %CommonDir%\BuildSolution.bat %1 %SettingsName% %BuildRootDir% %CommonDir% %2
 ECHO PoalCISResult=%PolaCISResult%
 IF %PolaCISResult% NEQ 0 SET exit=1
