@@ -1,0 +1,44 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+<!--
+2013/06/27 
+* Add support subversion
+
+Version : 1.0
+Revision:
+
+-->
+
+<PropertyGroup>
+<!-- 設定要儲存編譯後最新DLL的目錄 -->
+<DLLReleaseFolder>C:\Project\ST\4_程式開發相關\Source\NewDLLS</DLLReleaseFolder>
+<!-- 設定要存取其它擴充函式庫的目錄 -->
+<ExtProgramPath>D:\TMP\GitHub\CISUtility\ExtPrograms\</ExtProgramPath>
+<!-- 設定要編譯的組態(通常是Release或Debug) -->
+<ConfigureVersion>Debug</ConfigureVersion>
+<CommonProjPath>D:\TMP\GitHub\CISUtility\CommonProj</CommonProjPath>
+<WorkPath>C:\Project\ST\4_程式開發相關\Source</WorkPath>
+
+<!-- 有關VSS的設定 -->
+<VSSDBPath>\\10.6.228.55\VSSDB\CLR2$\srcsafe.ini</VSSDBPath>
+<VSSUser>nant</VSSUser>
+<VSSPassword>nant</VSSPassword>
+<!-- 設定要由VSS中取得的編譯版本，空白表示取最新版本 -->
+<VSSVersion></VSSVersion>
+
+<!-- 有關Subversion的設定 -->
+<SvnDBPath>https://kgi00525_191030.tw.kgi.com/svn/warrants/Source/ST/4_程式開發相關/Source</SvnDBPath>
+<SvnUser>7989</SvnUser>
+<SvnPassword></SvnPassword>
+<SvnVersion></SvnVersion>
+<RootDir></RootDir>
+<SvnUser></SvnUser>
+
+</PropertyGroup>
+
+<ItemGroup>
+<!-- 設定要更新DLL的來源目錄 -->
+    <DLLSourceFiles Include="C:\Project\ST\4_程式開發相關\Source\NewDLLS"/>
+</ItemGroup>
+ 
+</Project>

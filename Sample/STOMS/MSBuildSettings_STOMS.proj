@@ -1,0 +1,18 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> 
+
+<PropertyGroup>
+<RootDir>../</RootDir>
+<SourceDir>../</SourceDir>
+</PropertyGroup>
+
+<ItemGroup>
+  <DLLReleaseFiles Include="$(SourceDir)$(SlnName)\STOMS\bin\$(ConfigureVersion)\KGI.TW.Der.STOMS.*"/> 
+  <DLLReleaseFiles Include="$(SourceDir)$(SlnName)\BTOMSService\bin\$(ConfigureVersion)\KGI.TW.Der.BTOMSService.*"/> 
+  <DLLReleaseFiles Include="$(SourceDir)$(SlnName)\SpeedyOMSService\bin\$(ConfigureVersion)\KGI.TW.Der.SpeedyOMSService.*"/> 
+  <DLLReleaseFiles Include="$(SourceDir)$(SlnName)\TradeComOMSService\bin\$(ConfigureVersion)\KGI.TW.Der.TradeComOMSService.*"/> 
+</ItemGroup>
+
+<Import Project="$(WorkPath)\MSBuildSettings_User.targets"/>
+<Import Project="$(CommonProjPath)\Polaris_ProjectBuild.proj"/>
+
+</Project>

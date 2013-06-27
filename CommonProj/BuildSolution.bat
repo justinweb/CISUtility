@@ -11,12 +11,14 @@ SET CrtDir=%CD%\
 SET BuildRootDir=%3%
 SET CommonDir=%4%
 SET VSMode=%5%
+SET SVNURL=https://kgi00525_191030.tw.kgi.com/svn/warrants/Source/ST/4_程式開發相關/Source
 
 @ECHO [%CrtSln%]Building ...  >> %CrtDir%BuildResult.txt
 @ECHO [%CrtSln%]Use VSMode=%VSMode% >> %CrtDir%BuildResult.txt
 
 TITLE %CrtSln%
 IF VSS==%VSMode% goto VSMode_VSS
+IF SVN==%VSMode% goto VSMode_SVN
 IF GIT==%VSMode% goto VSMode_GIT
 GOTO BuildFailed
 
@@ -28,7 +30,9 @@ GOTO BuildAFVSS
 :VSMode_GIT
 GOTO BuildAFVSS
 
-
+:VSMode_SVN
+svn checkout %SVNURL%/%CrtSln% %BuildRootDir%/%CrtSln%
+pause
 
 :BuildAFVSS
 copy MSBuildSettings_%CrtSln%.proj .\%CrtSln%\MSBuildSettings_%CrtSln%.proj

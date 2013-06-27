@@ -9,9 +9,9 @@ Revision:
 <PropertyGroup>
 <RootDir>./</RootDir>
 <SlnName>TX4</SlnName>
-<ExtProgramPath>D:\Ext Programs\</ExtProgramPath>
+<ExtProgramPath>D:\TMP\GitHub\CISUtility\ExtPrograms\</ExtProgramPath>
 <SvnVersion></SvnVersion>
-<SvnDBPath>https://TWSNHFMITS02.Securities.HQ/svn/TX4DB/</SvnDBPath>
+<SvnDBPath>https://kgi00525_191030.tw.kgi.com/svn/warrants/Source/ST/4_程式開發相關/Source</SvnDBPath>
 <SvnUser>nant</SvnUser>
 <SvnPassword>nant</SvnPassword>
 <SettingPath>.\</SettingPath>
@@ -26,21 +26,6 @@ Revision:
 <Import Project="$(SettingPath)$(SettingsName)"/>
 -->
 
-<Target Name="UpdateSource1" >
-<Message Text="Get Subversion Version : $(SvnVersion)"/>
-<Message Text="RootDir : $(RootDir)"/>
-<Message Text="Path : $/$(SlnName).root"/>
-<Message Text="$(SvnDBPath) $(SvnUser) $(SvnPassword)"/>
-<SvnUpdate
-RepositoryPath="$(SvnDBPath)"
-Username="$(SvnUser)"
-Password="$(SvnPassword)" 
-Revision="$(SvnVersion)"
-LocalPath="$(RootDir)" 
-ToolPath="C:\Program Files\VisualSVN Server\bin"
-/>
-</Target>
-
 <Target Name="GetSource" >
 <Message Text="Get Subversion Version : $(SvnVersion)"/>
 <Message Text="RootDir : $(RootDir)"/>
@@ -52,7 +37,7 @@ Username="$(SvnUser)"
 Password="$(SvnPassword)" 
 Revision="$(SvnVersion)"
 LocalPath="$(RootDir)$(SlnName)" 
-ToolPath="C:\Program Files\VisualSVN Server\bin"
+ToolPath="C:\Program Files\Subversion\bin"
 />
 </Target>
 
