@@ -32,7 +32,8 @@ GOTO BuildAFVSS
 
 :VSMode_SVN
 svn checkout %SVNURL%/%CrtSln% %BuildRootDir%/%CrtSln%
-pause
+IF %ERRORLEVEL% NEQ 0 GOTO SVNFailed
+GOTO BuildAFVSS
 
 :BuildAFVSS
 copy MSBuildSettings_%CrtSln%.proj .\%CrtSln%\MSBuildSettings_%CrtSln%.proj
@@ -45,6 +46,10 @@ IF %ERRORLEVEL% NEQ 0 GOTO BuildFailed
 @ECHO [%CrtSln%]Build Successed >> %CrtDir%BuildResult.txt
 cd ..
 SET PolaCISResult=%ERRORLEVEL%
+GOTO BuildEnd
+
+:SVNFailed
+@ECHO [%CrtSln%] SVN Checkout failed xxxxxxxxxxxxx >> %CrtDir%BuildResult.txt
 GOTO BuildEnd
 
 :BuildFailed
