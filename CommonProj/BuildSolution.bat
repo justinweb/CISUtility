@@ -31,7 +31,16 @@ GOTO BuildAFVSS
 GOTO BuildAFVSS
 
 :VSMode_SVN
+IF EXIST %BuildRootDir%/%CrtSln% goto SVNUpdate
+@ECHO Svn checkout >> %CrtDir%BuildResult.txt
 svn checkout %SVNURL%/%CrtSln% %BuildRootDir%/%CrtSln%
+IF %ERRORLEVEL% NEQ 0 GOTO SVNFailed
+GOTO BuildAFVSS
+:SVNUpdate
+@ECHO Svn update >> %CrtDir%BuildResult.txt
+cd %BuildRootDir%/%CrtSln%
+svn update
+cd %CrtDir%
 IF %ERRORLEVEL% NEQ 0 GOTO SVNFailed
 GOTO BuildAFVSS
 
@@ -50,6 +59,7 @@ GOTO BuildEnd
 
 :SVNFailed
 @ECHO [%CrtSln%] SVN Checkout failed xxxxxxxxxxxxx >> %CrtDir%BuildResult.txt
+pause
 GOTO BuildEnd
 
 :BuildFailed
