@@ -16,7 +16,7 @@ SET SVNURL=https://kgi00525_191030.tw.kgi.com/svn/warrants/Source/ST/4_µ{¦¡¶}µo¬
 @ECHO [%CrtSln%]Building ...  >> %CrtDir%BuildResult.txt
 @ECHO [%CrtSln%]Use VSMode=%VSMode% >> %CrtDir%BuildResult.txt
 
-TITLE %CrtSln%
+TITLE %CrtSln% [Building]
 IF VSS==%VSMode% goto VSMode_VSS
 IF SVN==%VSMode% goto VSMode_SVN
 IF GIT==%VSMode% goto VSMode_GIT
@@ -68,6 +68,7 @@ SET PolaCISResult=%ERRORLEVEL%
 IF %CrtDir% NEQ %CD%\ cd ..
 
 @ECHO [%CrtSln%]Build xxxx Failed xxxx >> %CrtDir%BuildResult.txt
+TITLE %CrtSln% [Failed xxx]
 
 :BuildEnd
 
